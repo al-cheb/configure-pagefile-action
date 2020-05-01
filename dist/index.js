@@ -197,11 +197,15 @@ const run = () => {
         core.info(`- Maximum size: ${maximumSize}`);
         core.info(`- Disk root: ${diskRoot}`);
         const scriptPath = path.resolve(path.join("..", "scripts", "SetPageFileSize.ps1"));
-        const scriptArguments = [minimumSize, maximumSize, diskRoot].map(String);
+        const scriptArguments = [
+            "-MinimumSize", `"${minimumSize}"`,
+            "-MaximumSize", `"${maximumSize}"`,
+            "-DiskRoot", `"${diskRoot}"`
+        ].map(String);
         core.debug("Invoke configuration script:");
         core.debug(`Script path: ${scriptPath}`);
         core.debug(`Script arguments: ${scriptArguments}`);
-        child.execFileSync(scriptPath, scriptArguments, {
+        child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
             timeout: 60 * 1000 // 60 seconds
         });
     }
