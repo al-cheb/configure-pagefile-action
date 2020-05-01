@@ -1,0 +1,49 @@
+name: Validate action
+on:
+  pull_request:
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  default parameters:
+    strategy:
+      matrix:
+        os: [ windows-2016, windows-2019 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: configure-pagefile-action
+      uses: ./
+      with:
+        minimum-size: 8
+
+    - name: validation
+      shell: pwsh
+      runs: |
+        (Get-CimInstance Win32_PageFileUsage).AllocatedBaseSize
+        Invoke-Expression "wmic pagefile list /format:list"
+
+  custom-parameters:
+    strategy:
+      matrix:
+        os: [ windows-2016, windows-2019 ]
+        disk-root: [ "C:", "D:" ]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: configure-pagefile-action
+      uses: ./
+      with:
+        minimum-size: 4
+        maximum-size: 8
+        disk-root: ${{ matrix.disk-root }}
+
+    - name: validation
+      shell: pwsh
+      runs: |
+        (Get-CimInstance Win32_PageFileUsage).AllocatedBaseSize
+        Invoke-Expression "wmic pagefile list /format:list"
