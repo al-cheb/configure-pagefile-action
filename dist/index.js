@@ -188,12 +188,12 @@ const run = () => {
         const scriptArguments = [
             "-MinimumSize", minimumSize,
             "-MaximumSize", maximumSize,
-            "-DiskRoot", `"${diskRoot}"`
+            "-DiskRoot", diskRoot
         ];
         core.debug("Invoke configuration script:");
         core.debug(`Script path: ${scriptPath}`);
         core.debug(`Script arguments: ${scriptArguments}`);
-        const scriptResult = child.spawnSync("pwsh", ["-File", scriptPath], {
+        const scriptResult = child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
             timeout: 60 * 1000
         });
         if (scriptResult.stdout) {

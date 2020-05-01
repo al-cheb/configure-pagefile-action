@@ -23,7 +23,7 @@ jobs:
       shell: pwsh
       run: |
         (Get-CimInstance Win32_PageFileUsage).AllocatedBaseSize
-        Invoke-Expression "wmic pagefile list /format:list"
+        Invoke-Expression "wmic pagefile list /format:list" | Select-String "AllocatedBaseSize=", "Name="
 
   custom-parameters:
     strategy:
@@ -47,4 +47,4 @@ jobs:
       shell: pwsh
       run: |
         (Get-CimInstance Win32_PageFileUsage).AllocatedBaseSize
-        Invoke-Expression "wmic pagefile list /format:list"
+        Invoke-Expression "wmic pagefile list /format:list" | Select-String "AllocatedBaseSize=", "Name="
