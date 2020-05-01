@@ -206,7 +206,8 @@ const run = () => {
         core.debug(`Script path: ${scriptPath}`);
         core.debug(`Script arguments: ${scriptArguments}`);
         child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
-            timeout: 60 * 1000 // 60 seconds
+            timeout: 60 * 1000,
+            stdio: "inherit"
         });
     }
     catch (error) {
