@@ -193,12 +193,17 @@ const run = () => {
         core.debug("Invoke configuration script:");
         core.debug(`Script path: ${scriptPath}`);
         core.debug(`Script arguments: ${scriptArguments}`);
-        const scriptExitCode = child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
-            timeout: 60 * 1000,
-            stdio: "inherit"
-        }).status;
-        if (scriptExitCode !== 0) {
-            throw new Error(`Script has finished with exit code '${scriptExitCode}'`);
+        const scriptResult = child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
+            timeout: 60 * 1000
+        });
+        if (scriptResult.stdout) {
+            core.info(scriptResult.stdout.toString());
+        }
+        if (scriptResult.stderr) {
+            core.error(scriptResult.stderr.toString());
+        }
+        if (scriptResult.status !== 0) {
+            throw new Error(`Script has finished with exit code '${scriptResult.status}'`);
         }
     }
     catch (error) {
