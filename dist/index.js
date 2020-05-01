@@ -193,7 +193,7 @@ const run = () => {
         core.debug("Invoke configuration script:");
         core.debug(`Script path: ${scriptPath}`);
         core.debug(`Script arguments: ${scriptArguments}`);
-        const scriptResult = child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
+        const scriptResult = child.spawnSync("powershell", ["-File", scriptPath, ...scriptArguments], {
             timeout: 60 * 1000
         });
         core.info(JSON.stringify(scriptResult, null, 2));

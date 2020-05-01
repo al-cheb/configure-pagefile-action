@@ -191,5 +191,7 @@ namespace Util
 
 Add-Type -TypeDefinition $source
 
+Write-Host "test2"
+
 # Set SetPageFileSize
 [Util.PageFile]::SetPageFileSize($minimumSize, $maximumSize, $diskRoot)
