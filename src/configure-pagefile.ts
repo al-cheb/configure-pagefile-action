@@ -34,8 +34,8 @@ const run = (): void => {
 
         const scriptPath = path.resolve(path.join("scripts", "SetPageFileSize.ps1"));
         const scriptArguments = [
-            "-MinimumSize", `"${minimumSize}"`,
-            "-MaximumSize", `"${maximumSize}"`,
+            "-MinimumSize", minimumSize,
+            "-MaximumSize", maximumSize,
             "-DiskRoot", `"${diskRoot}"`
         ].map(String);
         core.debug("Invoke configuration script:");
