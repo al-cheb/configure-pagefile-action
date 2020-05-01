@@ -3,11 +3,11 @@ author: 'Aleksandr Chebotov & Maxim Lobanov'
 description: 'Configure Pagefile on Windows agents in GitHub Actions'
 inputs:
   minimum-size:
-    description: 'Set minimum size of Pagefile (GB)'
+    description: 'Set minimum size of Pagefile'
     required: false
     default: 8GB
   maximum-size:
-    description: 'Set maximum size of Pagefile (GB)'
+    description: 'Set maximum size of Pagefile'
     required: false
   disk-root:
     description: 'Set disk root where pagefile.sys will be located'
