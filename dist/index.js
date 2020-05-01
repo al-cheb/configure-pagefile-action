@@ -196,6 +196,7 @@ const run = () => {
         const scriptResult = child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
             timeout: 60 * 1000
         });
+        core.info(JSON.stringify(scriptResult, null, 2));
         if (scriptResult.stdout) {
             core.info(scriptResult.stdout.toString());
         }
