@@ -21,7 +21,7 @@ jobs:
 
     - name: validation
       shell: pwsh
-      runs: |
+      run: |
         (Get-CimInstance Win32_PageFileUsage).AllocatedBaseSize
         Invoke-Expression "wmic pagefile list /format:list"
 
@@ -44,6 +44,6 @@ jobs:
 
     - name: validation
       shell: pwsh
-      runs: |
+      run: |
         (Get-CimInstance Win32_PageFileUsage).AllocatedBaseSize
         Invoke-Expression "wmic pagefile list /format:list"
