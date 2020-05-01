@@ -39,7 +39,7 @@ jobs:
     - name: configure-pagefile-action
       uses: ./
       with:
-        minimum-size: 4GB
+        minimum-size: 8GB
         maximum-size: 8GB
         disk-root: ${{ matrix.disk-root }}
 
