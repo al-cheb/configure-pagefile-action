@@ -5,7 +5,7 @@ on:
     - cron: 0 0 * * *
 
 jobs:
-  default parameters:
+  default-parameters:
     strategy:
       matrix:
         os: [ windows-2016, windows-2019 ]
