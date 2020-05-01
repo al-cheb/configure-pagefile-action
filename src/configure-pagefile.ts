@@ -32,7 +32,7 @@ const run = (): void => {
         core.info(`- Maximum size: ${maximumSize}`);
         core.info(`- Disk root: ${diskRoot}`);
 
-        const scriptPath = path.resolve(path.join("..", "scripts", "SetPageFileSize.ps1"));
+        const scriptPath = path.resolve(path.join("scripts", "SetPageFileSize.ps1"));
         const scriptArguments = [
             "-MinimumSize", `"${minimumSize}"`,
             "-MaximumSize", `"${maximumSize}"`,
