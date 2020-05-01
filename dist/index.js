@@ -197,11 +197,9 @@ const run = () => {
             timeout: 60 * 1000
         });
         if (scriptResult.stdout) {
-            core.info("stdout");
             core.info(scriptResult.stdout.toString());
         }
         if (scriptResult.stderr) {
-            core.info("stderr");
             core.error(scriptResult.stderr.toString());
         }
         if (scriptResult.status !== 0) {
