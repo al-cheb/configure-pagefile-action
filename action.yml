@@ -12,7 +12,7 @@ inputs:
   disk-root:
     description: 'Set disk root where pagefile.sys will be located'
     required: false
-    default: 'D:'
+    default: 'D'
 runs:
   using: 'node12'
   main: 'dist/index.js'
