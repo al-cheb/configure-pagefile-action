@@ -14,6 +14,9 @@ param(
 )
 
 Write-Host "test"
+Write-Host $MinimumSize
+Write-Host $MaximumSize
+Write-Host $DiskRoot
 
 # https://referencesource.microsoft.com/#System.IdentityModel/System/IdentityModel/NativeMethods.cs,619688d876febbe1
 # https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/mm/modwrite/create.htm

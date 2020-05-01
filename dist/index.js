@@ -196,16 +196,13 @@ const run = () => {
         const scriptResult = child.spawnSync("pwsh", ["-File", scriptPath], {
             timeout: 60 * 1000
         });
-        core.info(JSON.stringify(scriptResult, null, 2));
         if (scriptResult.stdout) {
             core.info("stdout");
-            const v = String(scriptResult.stdout);
-            core.info(v);
+            core.info(scriptResult.stdout.toString());
         }
         if (scriptResult.stderr) {
             core.info("stderr");
-            const v = String(scriptResult.stderr);
-            core.error(v);
+            core.error(scriptResult.stderr.toString());
         }
         if (scriptResult.status !== 0) {
             throw new Error(`Script has finished with exit code '${scriptResult.status}'`);
