@@ -5,7 +5,7 @@ inputs:
   minimum-size:
     description: 'Set minimum size of Pagefile (GB)'
     required: false
-    default: 8
+    default: 8GB
   maximum-size:
     description: 'Set maximum size of Pagefile (GB)'
     required: false

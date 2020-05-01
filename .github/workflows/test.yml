@@ -17,7 +17,7 @@ jobs:
     - name: configure-pagefile-action
       uses: ./
       with:
-        minimum-size: 8
+        minimum-size: 8GB
 
     - name: validation
       shell: pwsh
@@ -39,8 +39,8 @@ jobs:
     - name: configure-pagefile-action
       uses: ./
       with:
-        minimum-size: 4
-        maximum-size: 8
+        minimum-size: 4GB
+        maximum-size: 8GB
         disk-root: ${{ matrix.disk-root }}
 
     - name: validation
