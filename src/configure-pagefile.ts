@@ -27,7 +27,7 @@ const run = (): void => {
         core.debug(`Script path: ${scriptPath}`);
         core.debug(`Script arguments: ${scriptArguments}`);
 
-        const scriptResult = child.spawnSync("powershell", ["-File", scriptPath, ...scriptArguments], {
+        const scriptResult = child.spawnSync("powershell", [scriptPath, ...scriptArguments], {
             timeout: 60 * 1000
         });
         if (scriptResult.stdout) { core.info(scriptResult.stdout.toString()); }
