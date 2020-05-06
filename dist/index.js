@@ -184,7 +184,7 @@ const run = () => {
         core.info(`- Minimum size: ${minimumSize}`);
         core.info(`- Maximum size: ${maximumSize}`);
         core.info(`- Disk root: ${diskRoot}`);
-        const scriptPath = path.resolve(path.join("scripts", "SetPageFileSize.ps1"));
+        const scriptPath = path.resolve(__dirname, "..", "scripts", "SetPageFileSize.ps1");
         const scriptArguments = [
             "-MinimumSize", minimumSize,
             "-MaximumSize", maximumSize,
@@ -193,7 +193,7 @@ const run = () => {
         core.debug("Invoke configuration script:");
         core.debug(`Script path: ${scriptPath}`);
         core.debug(`Script arguments: ${scriptArguments}`);
-        const scriptResult = child.spawnSync("pwsh", ["-File", scriptPath, ...scriptArguments], {
+        const scriptResult = child.spawnSync("powershell", [scriptPath, ...scriptArguments], {
             timeout: 60 * 1000
         });
         if (scriptResult.stdout) {
