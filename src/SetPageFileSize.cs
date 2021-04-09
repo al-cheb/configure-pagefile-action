@@ -23,20 +23,20 @@ namespace Util
             internal uint LowPart;
             internal uint HighPart;
         }
-    
+
         [StructLayout(LayoutKind.Sequential)]
         internal struct LUID_AND_ATTRIBUTES
         {
             internal LUID Luid;
             internal uint Attributes;
         }
-    
+
         [StructLayout(LayoutKind.Sequential)]
         internal struct TOKEN_PRIVILEGE
         {
             internal uint PrivilegeCount;
             internal LUID_AND_ATTRIBUTES Privilege;
-    
+
             internal static readonly uint Size = (uint)Marshal.SizeOf(typeof(TOKEN_PRIVILEGE));
         }
 
@@ -77,9 +77,9 @@ namespace Util
 
         [DllImport("ntdll.dll", CharSet = CharSet.Unicode, SetLastError = true, CallingConvention = CallingConvention.StdCall)]
         internal static extern Int32 NtCreatePagingFile(
-            [In] ref UNICODE_STRING pageFileName, 
-            [In] ref Int64 minimumSize, 
-            [In] ref Int64 maximumSize, 
+            [In] ref UNICODE_STRING pageFileName,
+            [In] ref Int64 minimumSize,
+            [In] ref Int64 maximumSize,
             [In] UInt32 flags
         );
 
@@ -91,7 +91,7 @@ namespace Util
         );
     }
 
-    public sealed class SafeCloseHandle: SafeHandleZeroOrMinusOneIsInvalid 
+    public sealed class SafeCloseHandle: SafeHandleZeroOrMinusOneIsInvalid
     {
         [DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
         internal extern static bool CloseHandle(IntPtr handle);
@@ -99,8 +99,8 @@ namespace Util
         private SafeCloseHandle() : base(true)
         {
         }
- 
-        public SafeCloseHandle(IntPtr preexistingHandle, bool ownsHandle) : base(ownsHandle) 
+
+        public SafeCloseHandle(IntPtr preexistingHandle, bool ownsHandle) : base(ownsHandle)
         {
             SetHandle(preexistingHandle);
         }
