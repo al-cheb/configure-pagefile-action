@@ -1,25 +1,9 @@
-<#
-.SYNOPSIS
-  Configure Pagefile on Windows machine
-.NOTES
-  Author:         Aleksandr Chebotov
-.EXAMPLE
-  SetPageFileSize.ps1 -MinimumSize 4GB -MaximumSize 8GB -DiskRoot "D:"
-#>
+// https://referencesource.microsoft.com/#System.IdentityModel/System/IdentityModel/NativeMethods.cs,619688d876febbe1
+// https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/mm/modwrite/create.htm
+// https://referencesource.microsoft.com/#mscorlib/microsoft/win32/safehandles/safefilehandle.cs,9b08210f3be75520
+// https://referencesource.microsoft.com/#mscorlib/system/security/principal/tokenaccesslevels.cs,6eda91f498a38586
+// https://www.autoitscript.com/forum/topic/117993-api-ntcreatepagingfile/
 
-param(
-    [System.UInt64] $MinimumSize = 8gb ,
-    [System.UInt64] $MaximumSize = 8gb ,
-    [System.String] $DiskRoot = "D:"
-)
-
-# https://referencesource.microsoft.com/#System.IdentityModel/System/IdentityModel/NativeMethods.cs,619688d876febbe1
-# https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/mm/modwrite/create.htm
-# https://referencesource.microsoft.com/#mscorlib/microsoft/win32/safehandles/safefilehandle.cs,9b08210f3be75520
-# https://referencesource.microsoft.com/#mscorlib/system/security/principal/tokenaccesslevels.cs,6eda91f498a38586
-# https://www.autoitscript.com/forum/topic/117993-api-ntcreatepagingfile/
-
-$source = @'
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -39,20 +23,20 @@ namespace Util
             internal uint LowPart;
             internal uint HighPart;
         }
-    
+
         [StructLayout(LayoutKind.Sequential)]
         internal struct LUID_AND_ATTRIBUTES
         {
             internal LUID Luid;
             internal uint Attributes;
         }
-    
+
         [StructLayout(LayoutKind.Sequential)]
         internal struct TOKEN_PRIVILEGE
         {
             internal uint PrivilegeCount;
             internal LUID_AND_ATTRIBUTES Privilege;
-    
+
             internal static readonly uint Size = (uint)Marshal.SizeOf(typeof(TOKEN_PRIVILEGE));
         }
 
@@ -93,9 +77,9 @@ namespace Util
 
         [DllImport("ntdll.dll", CharSet = CharSet.Unicode, SetLastError = true, CallingConvention = CallingConvention.StdCall)]
         internal static extern Int32 NtCreatePagingFile(
-            [In] ref UNICODE_STRING pageFileName, 
-            [In] ref Int64 minimumSize, 
-            [In] ref Int64 maximumSize, 
+            [In] ref UNICODE_STRING pageFileName,
+            [In] ref Int64 minimumSize,
+            [In] ref Int64 maximumSize,
             [In] UInt32 flags
         );
 
@@ -107,7 +91,7 @@ namespace Util
         );
     }
 
-    public sealed class SafeCloseHandle: SafeHandleZeroOrMinusOneIsInvalid 
+    public sealed class SafeCloseHandle: SafeHandleZeroOrMinusOneIsInvalid
     {
         [DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
         internal extern static bool CloseHandle(IntPtr handle);
@@ -115,8 +99,8 @@ namespace Util
         private SafeCloseHandle() : base(true)
         {
         }
- 
-        public SafeCloseHandle(IntPtr preexistingHandle, bool ownsHandle) : base(ownsHandle) 
+
+        public SafeCloseHandle(IntPtr preexistingHandle, bool ownsHandle) : base(ownsHandle)
         {
             SetHandle(preexistingHandle);
         }
@@ -185,9 +169,3 @@ namespace Util
         }
     }
 }
-'@
-
-Add-Type -TypeDefinition $source
-
-# Set SetPageFileSize
-[Util.PageFile]::SetPageFileSize($minimumSize, $maximumSize, $diskRoot)

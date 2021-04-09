@@ -12,10 +12,45 @@ inputs:
   disk-root:
     description: 'Set disk root where pagefile.sys will be located'
     required: false
-    default: 'D:'
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+  - name: Configure Pagefile
+    id: configure-pagefile
+    shell: pwsh
+    run: |
+      if ( $PSVersionTable.Platform -ne 'Win32NT') {
+        throw "This task is intended only for Windows platform. It can't be run on $($PSVersionTable.Platform) platform"
+      }
+
+      [System.UInt64] $MinimumSize = ($env:MinimumSize / 1kb) * 1kb
+      if ($MinimumSize -le 0) {
+        $MinimumSize = 8gb
+      }
+
+      [System.UInt64] $MaximumSize = ($env:MaximumSize / 1kb) * 1kb
+      if ($MaximumSize -le 0) {
+        $MaximumSize = $MinimumSize
+      }
+
+      [System.String] $DiskRoot = $env:DiskRoot
+      if ( [System.String]::IsNullOrWhiteSpace($DiskRoot) ) {
+        $DiskRoot = [System.IO.Path]::GetPathRoot($env:WorkSpace).TrimEnd([System.IO.Path]::DirectorySeparatorChar)
+      }
+
+      echo "Pagefile configuration:"
+      echo "- Minimum size: $($MinimumSize)"
+      echo "- Maximum size: $($MaximumSize)"
+      echo "- Disk root: $($DiskRoot)"
+
+      Add-Type -Path "$env:SourcePath"
+      [Util.PageFile]::SetPageFileSize($MinimumSize, $MaximumSize, $DiskRoot)
+    env:
+      MinimumSize: ${{ inputs.minimum-size }}
+      MaximumSize: ${{ inputs.maximum-size }}
+      DiskRoot: ${{ inputs.disk-root }}
+      SourcePath: ${{ github.action_path }}/src/SetPageFileSize.cs
+      WorkSpace: ${{ github.workspace }}
 branding:
   icon: 'cpu'
   color: 'purple'

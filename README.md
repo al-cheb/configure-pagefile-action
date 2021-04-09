@@ -6,7 +6,7 @@ This action is intended to configure Pagefile size and location for Windows imag
 |----------|-------------|--------|---------------|
 | `minimum-size` | Set minimum size of Pagefile | `2048MB`, `4GB`, `8GB` and etc. | `8GB` |
 | `maximum-size`          | Set maximum size of Pagefile | The same like `minimum-size` | `minimum-size` |
-| `disk-root`          | Set disk root where Pagefile will be located | `C:` or `D:` | `D:` |
+| `disk-root`          | Set disk root where Pagefile will be located | `C:` or `D:` | `Workspace root` |
 
 # Usage
 ```
