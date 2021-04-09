@@ -35,8 +35,7 @@ runs:
 
       [System.String] $DiskRoot = $env:DiskRoot
       if ( [System.String]::IsNullOrWhiteSpace($DiskRoot) ) {
-        $DiskRoot = [System.IO.Path]::GetPathRoot($env:WorkSpace)`
-                    .TrimEnd([System.IO.Path]::DirectorySeparatorChar)
+        $DiskRoot = [System.IO.Path]::GetPathRoot($env:WorkSpace).TrimEnd([System.IO.Path]::DirectorySeparatorChar)
       }
 
       echo "Pagefile configuration:"
