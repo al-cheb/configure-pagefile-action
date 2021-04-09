@@ -1,25 +1,9 @@
-<#
-.SYNOPSIS
-  Configure Pagefile on Windows machine
-.NOTES
-  Author:         Aleksandr Chebotov
-.EXAMPLE
-  SetPageFileSize.ps1 -MinimumSize 4GB -MaximumSize 8GB -DiskRoot "D:"
-#>
+// https://referencesource.microsoft.com/#System.IdentityModel/System/IdentityModel/NativeMethods.cs,619688d876febbe1
+// https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/mm/modwrite/create.htm
+// https://referencesource.microsoft.com/#mscorlib/microsoft/win32/safehandles/safefilehandle.cs,9b08210f3be75520
+// https://referencesource.microsoft.com/#mscorlib/system/security/principal/tokenaccesslevels.cs,6eda91f498a38586
+// https://www.autoitscript.com/forum/topic/117993-api-ntcreatepagingfile/
 
-param(
-    [System.UInt64] $MinimumSize = 8gb ,
-    [System.UInt64] $MaximumSize = 8gb ,
-    [System.String] $DiskRoot = "D:"
-)
-
-# https://referencesource.microsoft.com/#System.IdentityModel/System/IdentityModel/NativeMethods.cs,619688d876febbe1
-# https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/mm/modwrite/create.htm
-# https://referencesource.microsoft.com/#mscorlib/microsoft/win32/safehandles/safefilehandle.cs,9b08210f3be75520
-# https://referencesource.microsoft.com/#mscorlib/system/security/principal/tokenaccesslevels.cs,6eda91f498a38586
-# https://www.autoitscript.com/forum/topic/117993-api-ntcreatepagingfile/
-
-$source = @'
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -185,9 +169,3 @@ namespace Util
         }
     }
 }
-'@
-
-Add-Type -TypeDefinition $source
-
-# Set SetPageFileSize
-[Util.PageFile]::SetPageFileSize($minimumSize, $maximumSize, $diskRoot)
