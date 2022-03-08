@@ -13,15 +13,16 @@ const run = (): void => {
         const maximumSize = core.getInput("maximum-size", { required: false }) || minimumSize;
         const diskRoot = core.getInput("disk-root", { required: true });
         
-        const oneMinuteInMilliseconds: number = 60 * 1000;
-        const timeoutInMilliseconds: number = parseFloat(core.getInput("timeout", { required: false })) * 1000 || oneMinuteInMilliseconds;
+        const oneMinuteInSeconds: number = 60 * 1000;
+        const timeoutInSeconds: number = parseFloat(core.getInput("timeout", { required: false })) * 1000 || oneMinuteInSeconds;
 
         core.info("Pagefile configuration:");
         core.info(`- Minimum size: ${minimumSize}`);
         core.info(`- Maximum size: ${maximumSize}`);
         core.info(`- Disk root: ${diskRoot}`);
-        core.info(`- Timeout (in milliseconds): ${timeoutInMilliseconds}`);
+        core.info(`- Timeout (in seconds): ${timeoutInSeconds}`);
 
+        const timeoutInMilliseconds = timeoutInSeconds * 1000;
         const scriptPath = path.resolve(__dirname, "..", "scripts", "SetPageFileSize.ps1");
         const scriptArguments = [
             "-MinimumSize", minimumSize,
