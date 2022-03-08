@@ -8,14 +8,19 @@ const run = (): void => {
             throw new Error(`This task is intended only for Windows platform. It can't be run on '${process.platform}' platform`);
         }
 
+
         const minimumSize = core.getInput("minimum-size", { required: true });
         const maximumSize = core.getInput("maximum-size", { required: false }) || minimumSize;
         const diskRoot = core.getInput("disk-root", { required: true });
+        
+        const oneMinuteInMilliseconds: number = 60 * 1000;
+        const timeoutInMilliseconds: number = parseFloat(core.getInput("timeout", { required: false })) * 1000 || oneMinuteInMilliseconds;
 
         core.info("Pagefile configuration:");
         core.info(`- Minimum size: ${minimumSize}`);
         core.info(`- Maximum size: ${maximumSize}`);
         core.info(`- Disk root: ${diskRoot}`);
+        core.info(`- Timeout (in milliseconds): ${timeoutInMilliseconds}`);
 
         const scriptPath = path.resolve(__dirname, "..", "scripts", "SetPageFileSize.ps1");
         const scriptArguments = [
@@ -28,7 +33,7 @@ const run = (): void => {
         core.debug(`Script arguments: ${scriptArguments}`);
 
         const scriptResult = child.spawnSync("powershell", [scriptPath, ...scriptArguments], {
-            timeout: 60 * 1000
+            timeout: timeoutInMilliseconds
         });
         if (scriptResult.stdout) { core.info(scriptResult.stdout.toString()); }
         if (scriptResult.stderr) { core.error(scriptResult.stderr.toString()); }

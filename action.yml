@@ -13,6 +13,10 @@ inputs:
     description: 'Set disk root where pagefile.sys will be located'
     required: false
     default: 'D:'
+  timeout:
+    description: 'Timeout (in seconds) to use when performing pagesize configuration'
+    required: false
+    default: '60'
 runs:
   using: 'node12'
   main: 'dist/index.js'
