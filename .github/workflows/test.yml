@@ -8,11 +8,11 @@ jobs:
   default-parameters:
     strategy:
       matrix:
-        os: [ windows-2016, windows-2019 ]
+        os: [ windows-2019, windows-2022 ]
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: configure-pagefile-action
       uses: ./
@@ -28,13 +28,13 @@ jobs:
   custom-parameters:
     strategy:
       matrix:
-        os: [ windows-2016, windows-2019 ]
+        os: [ windows-2019, windows-2022 ]
         disk-root: [ "C:", "D:" ]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: configure-pagefile-action
       uses: ./
