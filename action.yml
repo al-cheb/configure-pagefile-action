@@ -14,9 +14,9 @@ inputs:
     required: false
     default: 'D:'
   timeout:
-    description: 'Set the timeout in milliseconds'
+    description: 'Set the timeout in seconds'
     required: false
-    default: '60000' # 1 minute
+    default: '60'
 runs:
   using: 'node16'
   main: 'dist/index.js'

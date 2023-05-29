@@ -11,7 +11,7 @@ const run = (): void => {
         const minimumSize = core.getInput("minimum-size", { required: true });
         const maximumSize = core.getInput("maximum-size", { required: false }) || minimumSize;
         const diskRoot = core.getInput("disk-root", { required: true });
-        const timeout = parseInt(core.getInput("timeout", { required: true }));
+        const timeout = parseInt(core.getInput("timeout", { required: true })) * 1000;
 
         core.info("Pagefile configuration:");
         core.info(`- Minimum size: ${minimumSize}`);
