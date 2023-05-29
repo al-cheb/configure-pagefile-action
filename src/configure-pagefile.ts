@@ -11,6 +11,7 @@ const run = (): void => {
         const minimumSize = core.getInput("minimum-size", { required: true });
         const maximumSize = core.getInput("maximum-size", { required: false }) || minimumSize;
         const diskRoot = core.getInput("disk-root", { required: true });
+        const timeout = parseInt(core.getInput("timeout", { required: true }));
 
         core.info("Pagefile configuration:");
         core.info(`- Minimum size: ${minimumSize}`);
@@ -28,7 +29,7 @@ const run = (): void => {
         core.debug(`Script arguments: ${scriptArguments}`);
 
         const scriptResult = child.spawnSync("powershell", [scriptPath, ...scriptArguments], {
-            timeout: 60 * 1000
+            timeout
         });
         if (scriptResult.stdout) { core.info(scriptResult.stdout.toString()); }
         if (scriptResult.stderr) { core.error(scriptResult.stderr.toString()); }

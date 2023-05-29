@@ -13,6 +13,10 @@ inputs:
     description: 'Set disk root where pagefile.sys will be located'
     required: false
     default: 'D:'
+  timeout:
+    description: 'Set the timeout in milliseconds'
+    required: false
+    default: '60000' # 1 minute
 runs:
   using: 'node16'
   main: 'dist/index.js'
