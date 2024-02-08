@@ -42,6 +42,7 @@ jobs:
         minimum-size: 4GB
         maximum-size: 8GB
         disk-root: ${{ matrix.disk-root }}
+        timeout: 120 # 2 minutes
 
     - name: validation
       shell: pwsh
