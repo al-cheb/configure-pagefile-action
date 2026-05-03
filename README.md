@@ -20,11 +20,6 @@ jobs:
       uses: al-cheb/configure-pagefile-action@v1.2
       with:
         minimum-size: 8GB
-
-    - name: configure Pagefile
-      uses: al-cheb/configure-pagefile-action@v1.2
-      with:
-        minimum-size: 8GB
         maximum-size: 16GB
         disk-root: "D:"
 ```
